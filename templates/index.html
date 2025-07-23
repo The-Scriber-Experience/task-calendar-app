@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="wrap">
+    <!-- Sidebar with Tasks -->
+    <div id="external-events">
+        <div id="external-events-listing">
+            <h4><i class="fas fa-tasks me-2"></i>Task Manager</h4>
+            
+            <!-- Add Task Form -->
+            <div class="add-task-form mb-4">
+                <button class="btn btn-gradient btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#addTaskForm">
+                    <i class="fas fa-plus me-1"></i>Add Task
+                </button>
+                
+                <div class="collapse" id="addTaskForm">
+                    <form method="POST" action="{{ url_for('add_task') }}" class="card card-body">
+                        <div class="mb-2">
+                            <input type="text" class="form-control form-control-sm" name="title" placeholder="Task title" required>
+                        </div>
+                        <div class="mb-2">
+                            <textarea class="form-control form-control-sm" name="description" placeholder="Description" rows="2"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <input type="date" class="form-control form-control-sm" name="due_date">
+                        </div>
+                        <button type="submit" class="btn btn-gradient btn-sm">
+                            <i class="fas fa-save me-1"></i>Save Task
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Task Filters -->
+            <div class="task-filters mb-3">
+                <div class="btn-group-vertical w-100" role="group">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-sm {% if not filter_type %}active{% endif %}">
+                        <i class="fas fa-list me-1"></i>All Tasks
+                    </a>
+                    <a href="{{ url_for('filter_tasks', filter_type='active') }}" class="btn btn-outline-primary btn-sm {% if filter_type == 'active' %}active{% endif %}">
+                        <i class="fas fa-clock me-1"></i>Active
+                    </a>
+                    <a href="{{ url_for('filter_tasks', filter_type='completed') }}" class="btn btn-outline-primary btn-sm {% if filter_type == 'completed' %}active{% endif %}">
+                        <i class="fas fa-check me-1"></i>Completed
+                    </a>
+                    <a href="{{ url_for('filter_tasks', filter_type='overdue') }}" class="btn btn-outline-danger btn-sm {% if filter_type == 'overdue' %}active{% endif %}">
+                        <i class="fas fa-exclamation-triangle me-1"></i>Overdue
+                    </a>
+                    <a href="{{ url_for('filter_tasks', filter_type='upcoming') }}" class="btn btn-outline-info btn-sm {% if filter_type == 'upcoming' %}active{% endif %}">
+                        <i class="fas fa-calendar-alt me-1"></i>Upcoming
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Task List -->
+            <div class="task-list">
+                {% for task in tasks %}
+                <div class="task-item fc-event {% if task.completed %}completed{% endif %}" data-task-id="{{ task.id }}">
+                    <div class="task-content">
+                        <div class="task-title {% if task.completed %}text-decoration-line-through{% endif %}">
+                            {{ task.title }}
+                        </div>
+                        {% if task.description %}
+                        <div class="task-description">{{ task.description }}</div>
+                        {% endif %}
+                        {% if task.due_date %}
+                        <div class="task-due-date">
+                            <i class="fas fa-calendar me-1"></i>{{ task.due_date.strftime('%Y-%m-%d') }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="task-actions">
+                        <form method="POST" action="{{ url_for('toggle_task', task_id=task.id) }}" style="display: inline;">
+                            <button type="submit" class="btn btn-sm btn-outline-success" title="{% if task.completed %}Mark as incomplete{% else %}Mark as complete{% endif %}">
+                                <i class="fas fa-{% if task.completed %}undo{% else %}check{% endif %}"></i>
+                            </button>
+                        </form>
+                        
+                        <button class="btn btn-sm btn-outline-primary" title="Edit task" 
+                                data-bs-toggle="collapse" data-bs-target="#editTask{{ task.id }}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        
+                        <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" style="display: inline;" 
+                              onsubmit="return confirm('Are you sure you want to delete this task?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete task">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Edit Task Form -->
+                    <div class="collapse mt-2" id="editTask{{ task.id }}">
+                        <form method="POST" action="{{ url_for('edit_task', task_id=task.id) }}" class="card card-body">
+                            <div class="mb-2">
+                                <input type="text" class="form-control form-control-sm" name="title" value="{{ task.title }}" required>
+                            </div>
+                            <div class="mb-2">
+                                <textarea class="form-control form-control-sm" name="description" rows="2">{{ task.description or '' }}</textarea>
+                            </div>
+                            <div class="mb-2">
+                                <input type="date" class="form-control form-control-sm" name="due_date" 
+                                       value="{% if task.due_date %}{{ task.due_date.strftime('%Y-%m-%d') }}{% endif %}">
+                            </div>
+                            <button type="submit" class="btn btn-gradient btn-sm">
+                                <i class="fas fa-save me-1"></i>Update Task
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                {% if not tasks %}
+                <div class="empty-state text-center p-3">
+                    <i class="fas fa-inbox fa-3x mb-3 text-muted"></i>
+                    <p class="text-muted">No tasks yet. Add your first task to get started!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Calendar Area -->
+    <div id="calendar"></div>
+    
+    <div style="clear:both"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize drag and drop for task items
+    $('.task-item').draggable({
+        zIndex: 999,
+        revert: true,
+        revertDuration: 0,
+        helper: 'clone'
+    });
+</script>
+{% endblock %}

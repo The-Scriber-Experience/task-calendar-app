@@ -1,0 +1,286 @@
+/* Main styling inspired by CodePen reference with PyScript gradients */
+main {
+    --gradDark: hsl(144, 100%, 89%);
+    --gradLight: hsl(42, 94%, 76%);
+    background: linear-gradient(135deg, #F8F9FA 0%, #e9ecef 100%);
+    padding: 20px 40px 40px 40px;
+    min-height: 100vh;
+    position: relative;
+    color: #333333;
+    font-family: 'Philosopher', Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #F8F9FA;
+    font-size: 14px;
+    font-family: 'Philosopher', Arial, sans-serif;
+    color: #333333;
+}
+
+/* Container layout */
+#wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Sidebar styling */
+#external-events {
+    flex: 0 0 300px;
+    min-width: 280px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(0, 255, 238, 0.1), rgba(39, 170, 255, 0.1));
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#external-events h4 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #00ffee, #27aaff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Gradient buttons inspired by PyScript */
+.btn-gradient {
+    background: linear-gradient(135deg, #00ffee, #27aaff);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 255, 238, 0.3);
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(135deg, #27aaff, #00ffee);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 238, 0.4);
+    color: white;
+}
+
+.btn-gradient:active {
+    transform: translateY(0);
+}
+
+/* Task item styling */
+.task-item {
+    margin: 12px 0;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 238, 0.2);
+    cursor: move;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.task-item:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.task-item.completed {
+    opacity: 0.7;
+    background: rgba(200, 230, 201, 0.5);
+}
+
+.task-content {
+    margin-bottom: 8px;
+}
+
+.task-title {
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 4px;
+}
+
+.task-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.task-due-date {
+    font-size: 11px;
+    color: #888;
+}
+
+.task-actions {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+}
+
+.task-actions .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* Calendar styling */
+#calendar {
+    flex: 1;
+    min-width: 600px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* FullCalendar customization */
+.fc-header-toolbar {
+    margin-bottom: 20px !important;
+}
+
+.fc-button-primary {
+    background: linear-gradient(135deg, #00ffee, #27aaff) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+.fc-button-primary:hover {
+    background: linear-gradient(135deg, #27aaff, #00ffee) !important;
+    transform: translateY(-1px);
+}
+
+.fc-event {
+    border-radius: 6px !important;
+    border: none !important;
+    padding: 2px 6px !important;
+}
+
+.fc-event.completed-event {
+    background: linear-gradient(135deg, #4caf50, #81c784) !important;
+    opacity: 0.8;
+}
+
+.fc-event.pending-event {
+    background: linear-gradient(135deg, #ff9800, #ffb74d) !important;
+}
+
+/* Task filters */
+.task-filters .btn {
+    margin-bottom: 4px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.task-filters .btn.active {
+    background: linear-gradient(135deg, #00ffee, #27aaff);
+    border-color: #00ffee;
+    color: white;
+}
+
+/* Flash messages */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 400px;
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styling */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 238, 0.3);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #00ffee;
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 238, 0.25);
+}
+
+.card {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 238, 0.2);
+}
+
+/* Empty state */
+.empty-state {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #wrap {
+        flex-direction: column;
+    }
+    
+    #external-events {
+        flex: none;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    #calendar {
+        min-width: auto;
+    }
+    
+    main {
+        padding: 20px 20px;
+    }
+}
+
+/* Custom scrollbar for task list */
+.task-list {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #00ffee, #27aaff);
+    border-radius: 3px;
+}
+
+/* Hover effects and transitions */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Typography enhancements */
+h4 {
+    font-family: 'Aclonica', serif;
+}
+
+.task-title {
+    font-family: 'Philosopher', Arial, sans-serif;
+    font-weight: 600;
+}
