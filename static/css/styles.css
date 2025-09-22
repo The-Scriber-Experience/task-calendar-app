@@ -2,19 +2,21 @@
 main {
     --gradDark: hsl(144, 100%, 89%);
     --gradLight: hsl(42, 94%, 76%);
-    background: linear-gradient(135deg, #F8F9FA 0%, #e9ecef 100%);
+    background: linear-gradient(135deg, rgba(248, 249, 250, 0.85) 0%, rgba(233, 236, 239, 0.85) 100%);
     padding: 20px 40px 40px 40px;
     min-height: 100vh;
     position: relative;
     color: #333333;
-    font-family: 'Philosopher', Arial, sans-serif;
+    font-family: 'Aclonica', serif;
+    backdrop-filter: blur(5px);
 }
 
 body {
     margin: 0;
-    background: #F8F9FA;
+    background: #F8F9FA url('/static/images/wisp_background.jpg') center center fixed;
+    background-size: cover;
     font-size: 14px;
-    font-family: 'Philosopher', Arial, sans-serif;
+    font-family: 'Aclonica', serif;
     color: #333333;
 }
 
@@ -49,6 +51,7 @@ body {
     color: transparent;
     font-weight: bold;
     text-align: center;
+    font-family: 'Aclonica', serif;
 }
 
 /* Gradient buttons inspired by PyScript */
@@ -57,10 +60,11 @@ body {
     border: none;
     color: white;
     border-radius: 8px;
-    padding: 8px 16px;
+    padding: 4px 12px;
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 255, 238, 0.3);
+    font-family: 'Aclonica', serif;
 }
 
 .btn-gradient:hover {
@@ -125,7 +129,7 @@ body {
 }
 
 .task-actions .btn {
-    padding: 4px 8px;
+    padding: 2px 6px;
     font-size: 12px;
 }
 
@@ -178,6 +182,9 @@ body {
     margin-bottom: 4px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    padding: 4px 8px;
+    font-family: 'Aclonica', serif;
+    font-size: 12px;
 }
 
 .task-filters .btn.active {
@@ -281,6 +288,6 @@ h4 {
 }
 
 .task-title {
-    font-family: 'Philosopher', Arial, sans-serif;
+    font-family: 'Aclonica', serif;
     font-weight: 600;
 }
